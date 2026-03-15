@@ -59,52 +59,99 @@
 //         console.error("Ongeldige input. Probeer het opnieuw door de pagina te verversen.")
 // }
 
-// Opdracht 4a
-const departmentChoice = prompt("Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]");
-let departmentChoiceTitle;
+// // Opdracht 4a
+// const departmentChoice = prompt("Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]");
+// let departmentChoiceTitle;
+//
+// switch (departmentChoice) {
+//     case "marketing":
+//         departmentChoiceTitle = "Marketing";
+//         break;
+//     case "sales":
+//         departmentChoiceTitle = "Sales";
+//         break;
+//     case "customer-service":
+//         departmentChoiceTitle = "Customer Service"
+//         break;
+//     default:
+//         console.error("Ongeldige keuze. Probeer het opnieuw door de pagina te verversen")
+// }
+//
+// if (departments[departmentChoice] !== undefined) {
+//     console.log(`${departmentChoiceTitle} is een leuke afdeling om te werken. Er werken op dit moment ${departments[departmentChoice].numberOfEmployees} medewerkers.`)
+//
+//     // Opdracht 4b
+//     // Opdracht 4c
+//     const jobs = departments[departmentChoice].jobs;
+//
+//     let jobChoicePrompt = `Je koos ${departmentChoiceTitle}. Over welke functie wil je meer weten? Voer een getal tussen 0 en ${jobs.length - 1} in.`;
+//
+//     for (let i = 0; i < jobs.length; i++) {
+//         jobChoicePrompt += ` ${i}: [${jobs[i].title}]`;
+//         if (i < jobs.length - 1) {
+//             jobChoicePrompt += ", ";
+//         }
+//     }
+//
+//     const jobChoice = prompt(jobChoicePrompt);
+//     console.log(`jobChoice is ${jobChoice}`)
+//
+//     if (jobChoice !== "") {
+//         const jobIdx = Number(jobChoice)
+//         if ((!isNaN(jobIdx)) || (jobIdx >= 0) && (jobIdx < jobs.length)) {
+//             console.log(
+//                 `Je koos ${jobs[jobIdx].title}. Een uitdagende rol! ${jobs[jobIdx].description}`);
+//         } else {
+//             console.error("Ongeldige input. Probeer het opnieuw door de pagina te verversen.");
+//         }
+//     } else {
+//         console.error("Ongeldige input. Probeer het opnieuw door de pagina te verversen.");
+//     }
+// }
 
-switch (departmentChoice) {
-    case "marketing":
-        departmentChoiceTitle = "Marketing";
-        break;
-    case "sales":
-        departmentChoiceTitle = "Sales";
-        break;
-    case "customer-service":
-        departmentChoiceTitle = "Customer Service"
-        break;
-    default:
-        console.error("Ongeldige keuze. Probeer het opnieuw door de pagina te verversen")
+
+// Opdracht 5a
+// document.getElementsByTagName("title")[0].textContent = "Tjerk Hoekstra";
+// document.getElementById("role-title").textContent = "Noedelsoep";
+
+// Opdracht 5b
+
+// herbruikbare functie om de error message content te laten zien
+function displayError() {
+    document.getElementById("error-message").textContent = "Ongeldige keuze. Probeer het opnieuw door de pagina te verversen";
 }
 
-if (departments[departmentChoice] !== undefined) {
-    console.log(`${departmentChoiceTitle} is een leuke afdeling om te werken. Er werken op dit moment ${departments[departmentChoice].numberOfEmployees} medewerkers.`)
+const departmentChoice = prompt("Over welke afdeling wil je meer informatie? Kies uit: [marketing / sales / customer-service]");
 
-    // Opdracht 4b
-    // Opdracht 4c
+let jobChoice;
+
+// als ongeldige keuze, dan is departments[userDepartmentChoice] undefined
+if (departments[departmentChoice] === undefined) {
+    displayError();
+} else {
     const jobs = departments[departmentChoice].jobs;
-
-    let jobChoicePrompt = `Je koos ${departmentChoiceTitle}. Over welke functie wil je meer weten? Voer een getal tussen 0 en ${jobs.length} in.`;
+    let userJobChoicePrompt = `Je koos ${departmentChoice}. Over welke functie wil je meer weten? Voer een getal tussen 0 en ${jobs.length - 1} in.`;
 
     for (let i = 0; i < jobs.length; i++) {
-        jobChoicePrompt += ` ${i}: [${jobs[i].title}]`;
+        userJobChoicePrompt += ` ${i}: [${departments[departmentChoice].jobs[i].title}]`;
         if (i < jobs.length - 1) {
-            jobChoicePrompt += ", ";
+            userJobChoicePrompt += ", ";
         }
     }
 
-    const jobChoice = prompt(jobChoicePrompt);
-    console.log(`jobChoice is ${jobChoice}`)
+    jobChoice = prompt(userJobChoicePrompt);
 
-    if (jobChoice !== "") {
-        const jobIdx = Number(jobChoice)
-        if ((jobIdx >= 0) && (jobIdx < jobs.length)) {
-            console.log(
-                `Je koos ${jobs[jobIdx].title}. Een uitdagende rol! ${jobs[jobIdx].description}`);
-        } else {
-            console.error("Ongeldige input. Probeer het opnieuw door de pagina te verversen.");
-        }
+    if (jobChoice === "") {
+        displayError();
     } else {
-        console.error("Ongeldige input. Probeer het opnieuw door de pagina te verversen.");
+        const jobIdx = Number(jobChoice);
+
+        if ((isNaN(jobIdx)) || (jobIdx < 0) || (jobIdx >= jobs.length)) {
+            displayError();
+        } else {
+            document.getElementById("role-title").textContent = jobs[jobIdx].title;
+            document.getElementById("department-description").textContent = departments[departmentChoice].description;
+            document.getElementById("role-description").textContent = jobs[jobIdx].description;
+        }
     }
 }
