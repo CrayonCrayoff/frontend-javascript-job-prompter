@@ -146,7 +146,12 @@ if (departments[departmentChoice] === undefined) {
     } else {
         const jobIdx = Number(jobChoice);
 
-        if ((isNaN(jobIdx)) || (jobIdx < 0) || (jobIdx >= jobs.length)) {
+        // als Number(jobChoice) NaN teruggeeft, heeft de gebruiker iets ingevoerd wat geen nummer is. Een te klein of te groot getal mag natuurlijk ook niet
+        if (
+            (isNaN(jobIdx)) ||
+            (jobIdx < 0) ||
+            (jobIdx >= jobs.length)
+        ) {
             displayError();
         } else {
             document.getElementById("role-title").textContent = jobs[jobIdx].title;
